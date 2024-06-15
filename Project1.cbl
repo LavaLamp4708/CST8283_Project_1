@@ -70,31 +70,25 @@
            DISPLAY "Opening file...".
            OPEN OUTPUT EMPLOYEE-RECORD.
        302-CLEAR-WS-RECORD.
-           DISPLAY "CLEANING"
            MOVE SPACES TO WS-EMPLOYEE-RECORD.
        303-PROMPT-EMPLOYEE-ID.
-           DISPLAY "Enter employee ID: "
-               WITH NO ADVANCING.
+           DISPLAY "Enter employee ID: ".
        304-ACCEPT-EMPLOYEE-ID.
            ACCEPT WS-EMPLOYEE-ID.
        305-PROMPT-DPT-CODE.
-           DISPLAY "Enter department code: "
-               WITH NO ADVANCING.
+           DISPLAY "Enter department code: ".
        306-ACCEPT-DPT-CODE.
            ACCEPT WS-DEPARTMENT-CODE.
        307-PROMPT-FIRST-NAME.
-           DISPLAY "Enter employee first name: "
-               WITH NO ADVANCING.
+           DISPLAY "Enter employee first name: ".
        308-ACCEPT-FIRST-NAME.
            ACCEPT WS-FIRST-NAME.
        309-PROMPT-LAST-NAME.
-           DISPLAY "Enter employee surname: "
-               WITH NO ADVANCING.
+           DISPLAY "Enter employee surname: ".
        310-ACCEPT-LAST-NAME.
            ACCEPT WS-LAST-NAME.
        311-PROMPT-YOS.
-           DISPLAY "Enter years of service: "
-               WITH NO ADVANCING.
+           DISPLAY "Enter years of service: ".
        312-ACCEPT-YOS.
            ACCEPT WS-YEARS-OF-SERVICE.
        313-WRITE-TO-FILE.
@@ -102,8 +96,7 @@
            WRITE FS-EMPLOYEE-RECORD.
        314-ASK-USER-TO-CONTINUE.
            DISPLAY "Enter a new record? Type "
-               WS-DOUBLEQUOTE "no" WS-DOUBLEQUOTE " to exit. "
-               WITH NO ADVANCING.
+               WS-DOUBLEQUOTE "no" WS-DOUBLEQUOTE " to exit. ".
        315-ACCEPT-CONTINUE-MESSAGE.
            ACCEPT WS-EOF.
 
