@@ -29,7 +29,7 @@
 
        WORKING-STORAGE SECTION.
 
-       01 WS-EOF PIC A(3).
+       01 WS-EOF PIC A(3) VALUE SPACES.
        01 WS-DOUBLEQUOTE PIC X(1) VALUE '"'.
 
        01 WS-EMPLOYEE-RECORD.
@@ -67,8 +67,10 @@
            PERFORM 316-CLOSE-FILE.
 
        301-OPEN-EMPLOYEE-RECORD.
+           DISPLAY "Opening file...".
            OPEN OUTPUT EMPLOYEE-RECORD.
        302-CLEAR-WS-RECORD.
+           DISPLAY "CLEANING"
            MOVE SPACES TO WS-EMPLOYEE-RECORD.
        303-PROMPT-EMPLOYEE-ID.
            DISPLAY "Enter employee ID: "
