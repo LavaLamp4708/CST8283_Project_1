@@ -13,13 +13,13 @@
        ENVIRONMENT DIVISION.
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
-           SELECT EMPLOYEE-RECORD
+           SELECT EMPLOYEE-RECORD-FILE
            ASSIGN TO "EmployeeRecord.txt"
            ORGANIZATION IS LINE SEQUENTIAL.
 
        DATA DIVISION.
        FILE SECTION.
-       FD EMPLOYEE-RECORD.
+       FD EMPLOYEE-RECORD-FILE.
        01 FS-EMPLOYEE-RECORD.
            05 FS-EMPLOYEE-ID PIC 9(6).
            05 FS-DEPARTMENT-CODE PIC 9(3).
@@ -29,7 +29,8 @@
 
        WORKING-STORAGE SECTION.
 
-       01 WS-EOF PIC A(3) VALUE SPACES.
+       01 WS-EOF PIC 9(1) VALUE 0.
+       01 WS-CONT PIC A(3) VALUE SPACES.
        01 WS-DOUBLEQUOTE PIC X(1) VALUE '"'.
 
        01 WS-EMPLOYEE-RECORD.
@@ -42,7 +43,8 @@
        PROCEDURE DIVISION.
        100-PROJECT-1.
            PERFORM 201-INITIATE-WRITE.
-           PERFORM 202-ACCEPT-USER-INPUT-TO-FILE UNTIL WS-EOF="no ".
+           PERFORM 202-ACCEPT-USER-INPUT-TO-FILE UNTIL WS-CONT="no ".
+           PERFORM 204-CLOSE-FILE.
            PERFORM 203-READ-FILE.
            PERFORM 204-CLOSE-FILE.
            STOP RUN.
@@ -66,16 +68,15 @@
            PERFORM 315-ACCEPT-CONTINUE-MESSAGE.
 
        203-READ-FILE.
-           PERFORM 319-CLOSE-FILE.
            PERFORM 316-OPEN-READ-MODE.
-           PERFORM 317-READ-RECORD UNTIL WS-EOF="yes".
+           PERFORM 317-READ-RECORD UNTIL WS-EOF=1.
 
        204-CLOSE-FILE.
            PERFORM 319-CLOSE-FILE.
 
        301-OPEN-EMPLOYEE-RECORD.
            DISPLAY "Opening file...".
-           OPEN OUTPUT EMPLOYEE-RECORD.
+           OPEN OUTPUT EMPLOYEE-RECORD-FILE.
        302-CLEAR-WS-RECORD.
            MOVE SPACES TO WS-EMPLOYEE-RECORD.
        303-PROMPT-EMPLOYEE-ID.
@@ -105,11 +106,22 @@
            DISPLAY "Enter a new record? Type "
                WS-DOUBLEQUOTE "no" WS-DOUBLEQUOTE " to exit. ".
        315-ACCEPT-CONTINUE-MESSAGE.
-           ACCEPT WS-EOF.
+           ACCEPT WS-CONT.
        316-OPEN-READ-MODE.
-           OPEN INPUT EMPLOYEE-RECORD.
+           OPEN INPUT EMPLOYEE-RECORD-FILE.
+           MOVE SPACES TO FS-EMPLOYEE-RECORD.
        317-READ-RECORD.
-           READ
+           READ EMPLOYEE-RECORD-FILE
+               AT END MOVE 1 TO WS-EOF
+               NOT AT END
+                   DISPLAY "Employee ID:       " FS-EMPLOYEE-ID
+                   DISPLAY "Department code:   " FS-DEPARTMENT-CODE
+                   DISPLAY "Last name:         " FS-LAST-NAME
+                   DISPLAY "First name:        " FS-FIRST-NAME
+                   DISPLAY "Years of service:  " FS-YEARS-OF-SERVICE
+                   DISPLAY SPACES
+           END-READ.
+
        319-CLOSE-FILE.
-           CLOSE EMPLOYEE-RECORD.
+           CLOSE EMPLOYEE-RECORD-FILE.
        END PROGRAM PROJECT-1.
