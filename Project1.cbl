@@ -47,6 +47,7 @@
            PERFORM 204-CLOSE-FILE.
            PERFORM 203-READ-FILE.
            PERFORM 204-CLOSE-FILE.
+           STOP RUN.
        201-INITIATE-WRITE.
            PERFORM 301-OPEN-EMPLOYEE-RECORD.
       * accept user input for all fields
@@ -123,5 +124,4 @@
 
        319-CLOSE-FILE.
            CLOSE EMPLOYEE-RECORD-FILE.
-           STOP RUN.
        END PROGRAM PROJECT-1.
